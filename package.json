@@ -1,0 +1,19 @@
+{
+  "name": "arrayutil",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pandy123/ArrayUtil.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pandy123/ArrayUtil/issues"
+  },
+  "homepage": "https://github.com/pandy123/ArrayUtil#readme"
+}
