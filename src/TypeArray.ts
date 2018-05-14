@@ -3,12 +3,16 @@ export class TypeArray {
    private _values: Array<any>;
    /**个数 */
    private _count: number;
+   /**内部迭代器 */
+   private _iteratorIndex: number;
 
    /**
     * 构造函数
     */
    constructor() {
       this._values = new Array<any>();
+      this._count = 0;
+      this._iteratorIndex = 0;
    }
 
    /**
@@ -35,7 +39,31 @@ export class TypeArray {
     * 添加一个元素，修改数据表 
     */
    public push(value: any): TypeArray {
-      this._values.push(value);
+      this._values[this._count] = value;
+      this._count++;
+      return this;
+   }
+
+   /**
+    * 
+    * @param target  0 为基底的索引，复制序列到该位置。如果是负数，target 将从末尾开始计算。如果 target 大于等于 arr.length，
+                     将会不发生拷贝。如果 target 在 start 之后，复制的序列将被修改以符合 arr.length。
+    * @param start   0 为基底的索引，开始复制元素的起始位置。如果是负数，start 将从末尾开始计算。如果 start 被忽略，copyWithin 将会从0开始复制。
+    * @param end     0 为基底的索引，开始复制元素的结束位置。copyWithin 将会拷贝到该位置，但不包括 end 这个位置的元素。如果是负数， end 将从末尾开始计算。
+    */
+   public copyWithin(target: number, start: number = 0, end: number = this.length - 1): TypeArray {
+      var begin = Math.max(start, 0);
+      var terminal = Math.min(end, this.length - 1);
+      if (target < 0 || target > this.length - 1) {
+         return this;
+      }
+      for (var i = 0; i < terminal - begin + 1; i++) {
+         if (target + i < this.length) {
+            this._values[target + i] = this._values[begin + i];
+         } else {
+            return this;
+         }
+      }
       return this;
    }
 
@@ -46,6 +74,30 @@ export class TypeArray {
    public forEach(process: Function) {
       for (var i = 0; i < this.length; i++) {
          process(this.get(i), i, this);
+      }
+   }
+
+   /**
+    * @
+    * @returns 一个新的 Array 迭代器对象。Array Iterator是对象，它的原型（__proto__:Array Iterator）上有一个next方法，可用用于遍历迭代器取得原数组的[key,value]。
+    */
+   public entries() {
+      this._iteratorIndex = 0;
+      var self = this;
+      return {
+         next: function () {
+            var nextIndex = self._iteratorIndex;
+            var length = self.length;
+            if (nextIndex < length) {
+               self._iteratorIndex++;
+               return { value: [nextIndex, self.get(nextIndex)], done: false };
+            } else {
+               return { value: undefined, done: true };
+            }
+         },
+         init: function () {
+            self._iteratorIndex = 0;
+         }
       }
    }
 
