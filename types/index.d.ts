@@ -1,2 +1,2 @@
 import { TypesArray } from './TypesArray';
-export { TypesArray as TypesArray }
+export { TypesArray as TypesArray };

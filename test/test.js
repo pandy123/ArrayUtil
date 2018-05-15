@@ -1,6 +1,6 @@
 var asseruil = require('assert')
-var TypeArray = require('../build/index.js').TypeArray
-var array = new TypeArray()
+var TypesArray = require('../build/index.js').TypesArray
+var array = new TypesArray()
 array.push(4)
 array.push(5)
 array.push(6)
